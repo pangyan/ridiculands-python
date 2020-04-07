@@ -20,7 +20,7 @@ def build_groups(hymns, snacks, service):
 
 def build_event_entry(date, description, group):
     if date and not date.isspace():
-        return date.rjust(6) + '　' + description + '　' + group
+        return date.rjust(6) + '　' + description + '　' + group + '\n'
     else:
         return ''
 
@@ -41,7 +41,10 @@ def build(event_header, event_entry):
 if __name__ == "__main__":
     print("dnlmch")
 
-pdf = pdfplumber.open("/Users/pywong/Documents/Hosanna_roster_2020-v5-test.pdf")
+inputFilePath = "../../../../resources/Hosanna_roster_2020-v5-test.pdf"
+outputFilePath = "../../../../output/events.txt"
+
+pdf = pdfplumber.open(inputFilePath)
 
 # for page in pdf.pages:
 first_page = pdf.pages[0]
@@ -51,8 +54,10 @@ print(table[1][7])
 print(table[1][8])
 print(table[1][9])
 
+outputFile = open(outputFilePath, "w")
+
 for i in range(2, len(table)):
-    print(build(table[1], table[i]))
+    outputFile.write(build(table[1], table[i]))
     # print(table[i][5:])
 
-
+outputFile.close()
